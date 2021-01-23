@@ -37,9 +37,11 @@ const GameCard: React.FC<GameCardProps> = ({
   hyperdriveRating,
 }) => {
   const classes = useStyles()
+
   const bull = <span className={classes.bullet}>•</span>
 
   const firstFeature = mass ? `mass: ${mass}` : `length: ${length}`
+
   const secondFeature = height
     ? `height: ${mass}`
     : `hyperdrive rating: ${hyperdriveRating}`

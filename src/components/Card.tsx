@@ -9,15 +9,19 @@ import {
 
 const useStyles = makeStyles({
   root: {
-    width: 275,
+    width: 250,
+    height: 250,
   },
   bullet: {
     display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
+    margin: '0 5px',
   },
   pos: {
-    marginBottom: 12,
+    marginBottom: 20,
+  },
+  title: {
+    textAlign: 'center',
+    marginBottom: 50,
   },
 })
 
@@ -43,22 +47,22 @@ const GameCard: React.FC<GameCardProps> = ({
   const firstFeature = mass ? `mass: ${mass}` : `length: ${length}`
 
   const secondFeature = height
-    ? `height: ${mass}`
+    ? `height: ${height}`
     : `hyperdrive rating: ${hyperdriveRating}`
 
   return (
     <Card className={classes.root}>
       <CardContent>
-        <Typography variant="h5" component="h2">
+        <Typography variant="h5" className={classes.title}>
           {name}
         </Typography>
 
-        <Typography className={classes.pos} color="textSecondary">
+        <Typography className={classes.pos}>
           {bull}
           {firstFeature}
         </Typography>
 
-        <Typography variant="body2" component="p">
+        <Typography>
           {bull}
           {secondFeature}
         </Typography>

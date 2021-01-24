@@ -5,29 +5,31 @@ import axios from 'axios'
 import { CharacterType, StarshipType } from './types'
 
 type DefaultContext = {
-  people: CharacterType[] | null
+  characters: CharacterType[] | null
   starships: StarshipType[] | null
 }
 
 export const Context = createContext<DefaultContext>({
-  people: null,
+  characters: null,
   starships: null,
 })
 
 const ContextProvider: React.FC = ({ children }) => {
   useEffect(() => {
-    getPeople()
+    getCharacters()
     getStarships()
   }, [])
 
-  const [people, setPeople] = useState<CharacterType[] | null>(null)
+  const [characters, setCharacters] = useState<CharacterType[] | null>(
+    null
+  )
   const [starships, setStarships] = useState<StarshipType[] | null>(null)
 
-  const getPeople = () => {
+  const getCharacters = () => {
     axios
       .get('https://swapi.dev/api/people/?page=1')
       .then((response) => {
-        setPeople(response.data.results)
+        setCharacters(response.data.results)
       })
       .catch((error) => {
         console.log(error)
@@ -46,7 +48,9 @@ const ContextProvider: React.FC = ({ children }) => {
   }
 
   return (
-    <Context.Provider value={{ people: people, starships: starships }}>
+    <Context.Provider
+      value={{ characters: characters, starships: starships }}
+    >
       {children}
     </Context.Provider>
   )

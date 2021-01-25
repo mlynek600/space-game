@@ -40,6 +40,7 @@ export const GameSelect: React.FC<SelectGameProps> = ({
       <Typography variant="h6" className={classes.select}>
         Select the type:
       </Typography>
+
       <Paper square className={classes.paper}>
         <Tabs
           value={gameType}
@@ -51,6 +52,7 @@ export const GameSelect: React.FC<SelectGameProps> = ({
             label="Characters"
             value="characters"
           />
+
           <Tab disabled={showMyCard} label="Starships" value="starships" />
         </Tabs>
       </Paper>

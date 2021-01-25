@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core'
 
 const useStyles = makeStyles({
-  root: {
+  card: {
     width: 240,
     height: 240,
   },
@@ -16,7 +16,7 @@ const useStyles = makeStyles({
     display: 'inline-block',
     margin: '0 5px',
   },
-  pos: {
+  marginBottom: {
     marginBottom: 20,
   },
   title: {
@@ -52,13 +52,13 @@ export const GameCard: React.FC<GameCardProps> = ({
     : `hyperdrive rating: ${hyperdriveRating}`
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.card}>
       <CardContent>
         <Typography variant="h5" className={classes.title}>
           {name}
         </Typography>
 
-        <Typography className={classes.pos}>
+        <Typography className={classes.marginBottom}>
           {bull}
           {firstFeature}
         </Typography>

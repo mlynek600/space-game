@@ -1,8 +1,7 @@
 import React from 'react'
 
-import InfoIcon from '@material-ui/icons/Info'
-
 import { Tooltip, makeStyles } from '@material-ui/core'
+import InfoIcon from '@material-ui/icons/Info'
 
 const useStyles = makeStyles({
   tooltip: {

@@ -3,15 +3,15 @@ import React from 'react'
 import { Modal, makeStyles, Paper, Typography } from '@material-ui/core'
 
 const useStyles = makeStyles({
-  paper: {
-    height: 100,
-    width: 200,
+  modal: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    outline: 'none',
   },
-  modal: {
+  paper: {
+    height: 100,
+    width: 200,
+    outline: 'none',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',

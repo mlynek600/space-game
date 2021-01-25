@@ -1,10 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './index.css'
-import App from './components/App/App'
-import reportWebVitals from './reportWebVitals'
-import ContextProvider from './context'
+
 import 'fontsource-roboto'
+
+import App from './components/App/App'
+import ContextProvider from './context'
+import reportWebVitals from './reportWebVitals'
+
+import './index.css'
 
 ReactDOM.render(
   <React.StrictMode>

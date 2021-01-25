@@ -25,6 +25,7 @@ import {
 
 import {
   GameCard,
+  GameDrawButton,
   GameLegendTooltip,
   GamePoints,
   GameResultModal,
@@ -44,10 +45,6 @@ const useStyles = makeStyles({
   container: {
     height: '100%',
     paddingTop: '30px',
-  },
-  drawCardButton: {
-    marginRight: 30,
-    marginBottom: 30,
   },
   marginBottom: {
     marginBottom: 30,
@@ -188,24 +185,18 @@ const App: React.FC = () => {
       />
 
       <Box>
-        <Button
+        <GameDrawButton
           disabled={showMyCard}
-          onClick={onDrawMyCard}
-          variant="contained"
-          className={classes.drawCardButton}
-        >
-          Draw your card!
-        </Button>
+          onDrawButtonClick={onDrawMyCard}
+          text="Draw your card!"
+        />
 
         {showMyCard && (
-          <Button
+          <GameDrawButton
             disabled={showOpponentCard}
-            onClick={onDrawOpponentCard}
-            variant="contained"
-            className={classes.drawCardButton}
-          >
-            Draw opponent's card!
-          </Button>
+            onDrawButtonClick={onDrawOpponentCard}
+            text="Draw opponent's card!"
+          />
         )}
       </Box>
 

@@ -48,12 +48,18 @@ export const GameSelect: React.FC<SelectGameProps> = ({
           indicatorColor="primary"
         >
           <Tab
+            data-testid="charactersTab"
             disabled={showMyCard}
             label="Characters"
             value="characters"
           />
 
-          <Tab disabled={showMyCard} label="Starships" value="starships" />
+          <Tab
+            data-testid="starshipsTab"
+            disabled={showMyCard}
+            label="Starships"
+            value="starships"
+          />
         </Tabs>
       </Paper>
     </>

@@ -1,49 +1,37 @@
 import React, { useContext, useState } from 'react'
 
 import {
+  Box,
+  Button,
   Container,
   Typography,
   makeStyles,
-  Button,
-  Tabs,
-  Tab,
-  Paper,
-  Box,
 } from '@material-ui/core'
 
 import { Context } from '../../context'
 import {
+  CardDataType,
+  CharacterType,
   GameDataType,
   GameType,
-  CharacterType,
   StarshipType,
+  WinnerType,
 } from '../../types'
-import { getRandomCard, getBmiDifference } from '../../utils'
+import {
+  getRandomCard,
+  getCharacterBmiDifference,
+  getStarshipResult,
+} from '../../utils'
 
-import GameCard from '../Game/Card'
-import GameResultModal from '../Game/ResultModal'
-import GamePoints from '../Game/Points'
-import GameLegendTooltip from '../Game/LegendTooltip'
+import {
+  GameCard,
+  GameLegendTooltip,
+  GamePoints,
+  GameResultModal,
+  GameSelect,
+} from '../Game'
 
 const useStyles = makeStyles({
-  root: {
-    height: '100%',
-    paddingTop: '30px',
-  },
-  pos: {
-    marginBottom: 30,
-  },
-  select: {
-    marginBottom: 10,
-  },
-  drawCardButton: {
-    marginRight: 30,
-    marginBottom: 30,
-  },
-  paper: {
-    display: 'inline-block',
-    marginBottom: 50,
-  },
   box: {
     display: 'flex',
     alignItems: 'center',
@@ -53,7 +41,18 @@ const useStyles = makeStyles({
       flexDirection: 'column',
     },
   },
-  vs: {
+  container: {
+    height: '100%',
+    paddingTop: '30px',
+  },
+  drawCardButton: {
+    marginRight: 30,
+    marginBottom: 30,
+  },
+  marginBottom: {
+    marginBottom: 30,
+  },
+  vsText: {
     margin: '0 30px',
   },
 })
@@ -66,16 +65,12 @@ const App: React.FC = () => {
   const [gameType, setGameType] = useState<GameType>('characters')
 
   const [showMyCard, setShowMyCard] = useState(false)
-
   const [showOpponentCard, setShowOpponentCard] = useState(false)
 
-  const [myCardData, setMyCardData] = useState<
-    CharacterType | StarshipType | null
-  >(null)
-
-  const [opponentCardData, setOpponentCardData] = useState<
-    CharacterType | StarshipType | null
-  >(null)
+  const [myCardData, setMyCardData] = useState<CardDataType>(null)
+  const [opponentCardData, setOpponentCardData] = useState<CardDataType>(
+    null
+  )
 
   const [winner, setWinner] = useState<'me' | 'opponent' | 'draw' | null>(
     null
@@ -85,31 +80,6 @@ const App: React.FC = () => {
 
   const [myPoints, setMyPoints] = useState(0)
   const [opponentPoints, setOpponentPoints] = useState(0)
-
-  const onCloseModal = () => {
-    setIsModalOpen(false)
-    setShowMyCard(false)
-    setShowOpponentCard(false)
-
-    if (winner === 'me') setMyPoints(myPoints + 1)
-    else if (winner === 'opponent') setOpponentPoints(opponentPoints + 1)
-  }
-
-  const onDrawMyCard = () => {
-    const myCardData = getRandomCard(gameData, gameType)
-
-    setMyCardData(myCardData)
-
-    setShowMyCard(true)
-  }
-
-  const onDrawOpponentCard = () => {
-    const opponentCardData = getRandomCard(gameData, gameType)
-
-    setOpponentCardData(opponentCardData)
-
-    setShowOpponentCard(true)
-  }
 
   const getCharacterCard = (isMine: boolean) => {
     const dataSource = isMine ? myCardData : opponentCardData
@@ -145,31 +115,26 @@ const App: React.FC = () => {
       ? getCharacterCard(false)
       : getStarshipCard(false))
 
-  const getCharacterBmiDifference = (isMine: boolean) => {
-    const dataSource = isMine ? myCardData : opponentCardData
+  const onDrawMyCard = () => {
+    const myCardData = getRandomCard(gameData, gameType)
 
-    const { mass, height } = dataSource as CharacterType
-
-    return getBmiDifference(mass, height)
+    setMyCardData(myCardData)
+    setShowMyCard(true)
   }
 
-  const getStarshipResult = (isMine: boolean) => {
-    const dataSource = isMine ? myCardData : opponentCardData
+  const onDrawOpponentCard = () => {
+    const opponentCardData = getRandomCard(gameData, gameType)
 
-    const { length, hyperdrive_rating } = dataSource as StarshipType
-
-    const result =
-      Number(length.replace(',', '')) * Number(hyperdrive_rating)
-
-    return result
+    setOpponentCardData(opponentCardData)
+    setShowOpponentCard(true)
   }
 
   const onCharactersFight = () => {
-    const myResult = getCharacterBmiDifference(true)
+    const myResult = getCharacterBmiDifference(myCardData)
 
-    const opponentResult = getCharacterBmiDifference(false)
+    const opponentResult = getCharacterBmiDifference(opponentCardData)
 
-    let winner: 'me' | 'opponent' | 'draw'
+    let winner: WinnerType
 
     if (myResult === opponentResult) winner = 'draw'
     else winner = myResult < opponentResult ? 'me' : 'opponent'
@@ -178,11 +143,11 @@ const App: React.FC = () => {
   }
 
   const onStarshipsFight = () => {
-    const myResult = getStarshipResult(true)
+    const myResult = getStarshipResult(myCardData)
 
-    const opponentResult = getStarshipResult(false)
+    const opponentResult = getStarshipResult(opponentCardData)
 
-    let winner: 'me' | 'opponent' | 'draw'
+    let winner: WinnerType
 
     if (myResult === opponentResult) winner = 'draw'
     else winner = myResult > opponentResult ? 'me' : 'opponent'
@@ -197,96 +162,82 @@ const App: React.FC = () => {
     setIsModalOpen(true)
   }
 
+  const onCloseModal = () => {
+    setIsModalOpen(false)
+    setShowMyCard(false)
+    setShowOpponentCard(false)
+
+    if (winner === 'me') setMyPoints(myPoints + 1)
+    else if (winner === 'opponent') setOpponentPoints(opponentPoints + 1)
+  }
+
   return (
-    <>
-      <Container maxWidth="md" className={classes.root}>
-        <Typography variant="h4">
-          Let's play the Star Wars game!
-        </Typography>
-        <GameLegendTooltip />
+    <Container maxWidth="md" className={classes.container}>
+      <Typography variant="h4">Let's play the Star Wars game!</Typography>
 
-        {winner && (
-          <GamePoints
-            myPoints={myPoints}
-            opponentPoints={opponentPoints}
-          />
-        )}
+      <GameLegendTooltip />
 
-        <Typography variant="h6" className={classes.select}>
-          Select the type:
-        </Typography>
+      {winner && (
+        <GamePoints myPoints={myPoints} opponentPoints={opponentPoints} />
+      )}
 
-        <Paper square className={classes.paper}>
-          <Tabs
-            value={gameType}
-            onChange={(_, value) => setGameType(value)}
-            indicatorColor="primary"
-          >
-            <Tab
-              disabled={showMyCard}
-              label="Characters"
-              value="characters"
-            />
-            <Tab
-              disabled={showMyCard}
-              label="Starships"
-              value="starships"
-            />
-          </Tabs>
-        </Paper>
+      <GameSelect
+        gameType={gameType}
+        showMyCard={showMyCard}
+        setGameType={setGameType}
+      />
 
-        <Box>
+      <Box>
+        <Button
+          disabled={showMyCard}
+          onClick={onDrawMyCard}
+          variant="contained"
+          className={classes.drawCardButton}
+        >
+          Draw your card!
+        </Button>
+
+        {showMyCard && (
           <Button
-            disabled={showMyCard}
-            onClick={onDrawMyCard}
+            disabled={showOpponentCard}
+            onClick={onDrawOpponentCard}
             variant="contained"
             className={classes.drawCardButton}
           >
-            Draw your card!
-          </Button>
-
-          {showMyCard && (
-            <Button
-              disabled={showOpponentCard}
-              onClick={onDrawOpponentCard}
-              variant="contained"
-              className={classes.drawCardButton}
-            >
-              Draw opponent's card!
-            </Button>
-          )}
-        </Box>
-
-        <Box className={classes.box}>
-          {myCard}
-
-          {showOpponentCard && (
-            <Typography variant="h4" className={classes.vs}>
-              vs.
-            </Typography>
-          )}
-
-          {opponentCard}
-        </Box>
-
-        {showOpponentCard && (
-          <Button
-            onClick={onFightButtonClick}
-            variant="contained"
-            color="secondary"
-            className={classes.pos}
-          >
-            Fight!
+            Draw opponent's card!
           </Button>
         )}
-      </Container>
+      </Box>
+
+      <Box className={classes.box}>
+        {myCard}
+
+        {showOpponentCard && (
+          <Typography variant="h4" className={classes.vsText}>
+            vs.
+          </Typography>
+        )}
+
+        {opponentCard}
+      </Box>
+
+      {showOpponentCard && (
+        <Button
+          onClick={onFightButtonClick}
+          variant="contained"
+          color="secondary"
+          className={classes.marginBottom}
+        >
+          Fight!
+        </Button>
+      )}
 
       <GameResultModal
         isModalOpen={isModalOpen}
         winner={winner}
         onCloseModal={onCloseModal}
       />
-    </>
+    </Container>
   )
 }
 

@@ -25,7 +25,7 @@ type GameResultModalProps = {
   onCloseModal: () => void
 }
 
-const GameResultModal: React.FC<GameResultModalProps> = ({
+export const GameResultModal: React.FC<GameResultModalProps> = ({
   isModalOpen,
   winner,
 
@@ -58,5 +58,3 @@ const GameResultModal: React.FC<GameResultModalProps> = ({
     </Modal>
   )
 }
-
-export default GameResultModal

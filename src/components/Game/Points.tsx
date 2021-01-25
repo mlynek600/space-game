@@ -2,16 +2,16 @@ import React from 'react'
 
 import { Box, Typography, makeStyles } from '@material-ui/core'
 
+const useStyles = makeStyles({
+  box: { marginBottom: 20 },
+})
+
 type GamePointsProps = {
   myPoints: number
   opponentPoints: number
 }
 
-const useStyles = makeStyles({
-  box: { marginBottom: 20 },
-})
-
-const GamePoints: React.FC<GamePointsProps> = ({
+export const GamePoints: React.FC<GamePointsProps> = ({
   myPoints,
   opponentPoints,
 }) => {
@@ -27,5 +27,3 @@ const GamePoints: React.FC<GamePointsProps> = ({
     </Box>
   )
 }
-
-export default GamePoints

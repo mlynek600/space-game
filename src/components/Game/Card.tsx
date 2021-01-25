@@ -34,7 +34,7 @@ type GameCardProps = {
   hyperdriveRating?: string
 }
 
-const GameCard: React.FC<GameCardProps> = ({
+export const GameCard: React.FC<GameCardProps> = ({
   name,
   mass,
   height,
@@ -71,5 +71,3 @@ const GameCard: React.FC<GameCardProps> = ({
     </Card>
   )
 }
-
-export default GameCard

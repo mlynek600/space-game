@@ -11,7 +11,7 @@ const useStyles = makeStyles({
   },
 })
 
-const GameLegendTooltip: React.FC = () => {
+export const GameLegendTooltip: React.FC = () => {
   const classes = useStyles()
 
   const tooltipTitle = (
@@ -38,5 +38,3 @@ const GameLegendTooltip: React.FC = () => {
     </Tooltip>
   )
 }
-
-export default GameLegendTooltip

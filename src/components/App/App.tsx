@@ -5,7 +5,6 @@ import {
   Typography,
   makeStyles,
   Button,
-  ButtonGroup,
   Tabs,
   Tab,
   Paper,
@@ -37,8 +36,8 @@ const useStyles = makeStyles({
   select: {
     marginBottom: 10,
   },
-  drawButtons: {
-    display: 'block',
+  drawCardButton: {
+    marginRight: 30,
     marginBottom: 30,
   },
   paper: {
@@ -49,6 +48,10 @@ const useStyles = makeStyles({
     display: 'flex',
     alignItems: 'center',
     marginBottom: 40,
+
+    '@media (max-width: 600px)': {
+      flexDirection: 'column',
+    },
   },
   vs: {
     margin: '0 30px',
@@ -232,8 +235,13 @@ const App: React.FC = () => {
           </Tabs>
         </Paper>
 
-        <ButtonGroup size="large" className={classes.drawButtons}>
-          <Button disabled={showMyCard} onClick={onDrawMyCard}>
+        <Box>
+          <Button
+            disabled={showMyCard}
+            onClick={onDrawMyCard}
+            variant="contained"
+            className={classes.drawCardButton}
+          >
             Draw your card!
           </Button>
 
@@ -241,11 +249,13 @@ const App: React.FC = () => {
             <Button
               disabled={showOpponentCard}
               onClick={onDrawOpponentCard}
+              variant="contained"
+              className={classes.drawCardButton}
             >
               Draw opponent's card!
             </Button>
           )}
-        </ButtonGroup>
+        </Box>
 
         <Box className={classes.box}>
           {myCard}
@@ -264,6 +274,7 @@ const App: React.FC = () => {
             onClick={onFightButtonClick}
             variant="contained"
             color="secondary"
+            className={classes.pos}
           >
             Fight!
           </Button>

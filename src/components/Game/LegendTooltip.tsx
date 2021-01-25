@@ -28,7 +28,12 @@ const GameLegendTooltip: React.FC = () => {
   )
 
   return (
-    <Tooltip title={tooltipTitle} arrow className={classes.tooltip}>
+    <Tooltip
+      title={tooltipTitle}
+      arrow
+      className={classes.tooltip}
+      enterTouchDelay={1}
+    >
       <InfoIcon />
     </Tooltip>
   )

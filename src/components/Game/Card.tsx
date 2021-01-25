@@ -9,8 +9,8 @@ import {
 
 const useStyles = makeStyles({
   root: {
-    width: 250,
-    height: 250,
+    width: 240,
+    height: 240,
   },
   bullet: {
     display: 'inline-block',
@@ -22,6 +22,7 @@ const useStyles = makeStyles({
   title: {
     textAlign: 'center',
     marginBottom: 50,
+    height: 50,
   },
 })
 

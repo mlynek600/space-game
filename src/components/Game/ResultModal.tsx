@@ -33,17 +33,15 @@ export const GameResultModal: React.FC<GameResultModalProps> = ({
 }) => {
   const classes = useStyles()
 
-  const modalText =
-    winner === 'draw'
-      ? 'Draw!'
-      : winner === 'me'
-      ? 'You won!'
-      : 'You lost!'
+  const getModalText = () => {
+    if (winner === 'draw') return 'Draw!'
+    else return winner === 'me' ? 'You won!' : 'You lost!'
+  }
 
   const body = (
     <Paper className={classes.paper}>
       <Typography color="primary" variant="h5">
-        {modalText}
+        {getModalText()}
       </Typography>
     </Paper>
   )
